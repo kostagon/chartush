@@ -9,3 +9,5 @@
 
 - No inline styles unless absolutely necessary (such as dynamic colors in the editor)
 - Use lucide icons
+
+- This app support light and dark themes, so use CSS variables for all colors and switch them based on the theme from the store.
