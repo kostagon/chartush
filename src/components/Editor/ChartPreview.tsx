@@ -1,6 +1,9 @@
 import { useEffect, useRef } from 'react'
 import { useChartStore } from '../../store/chartStore'
 import { drawBarsChart } from '../Charts/BarsChart'
+import { drawCirclesChart } from '../Charts/CirclesChart'
+import { drawRectanglesChart } from '../Charts/RectanglesChart'
+import { drawDonutChart } from '../Charts/DonutChart'
 
 const CANVAS_WIDTH = 600
 const CANVAS_HEIGHT = 400
@@ -30,7 +33,15 @@ export function ChartPreview() {
       case 'bars':
         drawBarsChart(ctx, chart, CANVAS_WIDTH, CANVAS_HEIGHT)
         break
-      // Future chart types will be added here
+      case 'circles':
+        drawCirclesChart(ctx, chart, CANVAS_WIDTH, CANVAS_HEIGHT)
+        break
+      case 'rectangles':
+        drawRectanglesChart(ctx, chart, CANVAS_WIDTH, CANVAS_HEIGHT)
+        break
+      case 'donut':
+        drawDonutChart(ctx, chart, CANVAS_WIDTH, CANVAS_HEIGHT)
+        break
       default:
         drawBarsChart(ctx, chart, CANVAS_WIDTH, CANVAS_HEIGHT)
     }

@@ -1,11 +1,11 @@
 import { useChartStore } from '../../store/chartStore'
 import type { ChartType } from '../../types'
 
-const CHART_TYPES: { value: ChartType; label: string; disabled: boolean }[] = [
-  { value: 'bars', label: 'Bars', disabled: false },
-  { value: 'circles', label: 'Circles', disabled: true },
-  { value: 'rectangles', label: 'Rectangles', disabled: true },
-  { value: 'donut', label: 'Donut', disabled: true }
+const CHART_TYPES: { value: ChartType; label: string }[] = [
+  { value: 'bars', label: 'Bars' },
+  { value: 'circles', label: 'Circles' },
+  { value: 'rectangles', label: 'Rectangles' },
+  { value: 'donut', label: 'Donut' }
 ]
 
 export function EditorPanel() {
@@ -68,7 +68,7 @@ export function EditorPanel() {
           onChange={onTypeChange}
         >
           {CHART_TYPES.map((type) => (
-            <option key={type.value} value={type.value} disabled={type.disabled}>
+            <option key={type.value} value={type.value}>
               {type.label}
             </option>
           ))}
