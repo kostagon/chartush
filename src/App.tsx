@@ -1,11 +1,12 @@
 import { createHashRouter, RouterProvider } from 'react-router-dom'
 import { RootLayout } from './layouts'
-import { HomePage, AboutPage, EditorPage, GalleryPage } from './pages'
+import { HomePage, AboutPage, EditorPage, GalleryPage, NotFoundPage } from './pages'
 
 const router = createHashRouter([
     {
         path: '/',
         element: <RootLayout />,
+        errorElement: <NotFoundPage />,
         children: [
             {
                 index: true,
@@ -26,6 +27,10 @@ const router = createHashRouter([
             {
                 path: 'gallery',
                 element: <GalleryPage />
+            },
+            {
+                path: '*',
+                element: <NotFoundPage />
             }
         ]
     }
