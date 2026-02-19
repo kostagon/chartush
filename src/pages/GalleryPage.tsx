@@ -9,7 +9,9 @@ export function GalleryPage() {
   const [charts, setCharts] = useState<Chart[]>(() => loadCharts())
   const [deleteId, setDeleteId] = useState<string | null>(null)
   const navigate = useNavigate()
-  const deleteChartFromGallery = useChartStore((state) => state.deleteChartFromGallery)
+  const deleteChartFromGallery = useChartStore(
+    (state) => state.deleteChartFromGallery,
+  )
 
   function onEdit(id: string) {
     navigate(`/editor/${id}`)

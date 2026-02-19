@@ -1,6 +1,7 @@
 # Plan: Footer with Charts Data Display
 
 ## Current State
+
 - ✅ Gallery page displays saved charts from localStorage
 - ✅ Chart editor creates/edits charts
 - ✅ `gallery.service.ts` manages chart persistence
@@ -12,36 +13,40 @@
 Before implementation, please clarify:
 
 ### 1. **Footer Content & Purpose**
-   - What specific data should the footer show?
-     - [V] Total number of saved charts?
-     - [ ] Recently edited charts?
-     - [ ] Chart type distribution/statistics?
-     - [V] Total charts created count?
-     - [ ] Other metrics?
+
+- What specific data should the footer show?
+  - [V] Total number of saved charts?
+  - [ ] Recently edited charts?
+  - [ ] Chart type distribution/statistics?
+  - [V] Total charts created count?
+  - [ ] Other metrics?
 
 ### 2. **Display/Interaction**
-   - Should the footer be:
-     - [ ] Static (read-only display)?
-     - [V] Interactive (clickable to navigate)?
-     - [ ] Collapsible/expandable?
-   - Should it show real-time updates when charts are saved/deleted?
+
+- Should the footer be:
+  - [ ] Static (read-only display)?
+  - [V] Interactive (clickable to navigate)?
+  - [ ] Collapsible/expandable?
+- Should it show real-time updates when charts are saved/deleted?
 
 ### 3. **Visibility & Layout**
-   - Should the footer appear on:
-     - [V] All pages (home, gallery, editor, about)?
-     - [ ] Specific pages only?
-   - Should it be:
-     - [ ] Sticky (always visible at bottom)?
-     - [V] Fixed in viewport?
-     - [ ] Regular footer (scrolls with content)?
+
+- Should the footer appear on:
+  - [V] All pages (home, gallery, editor, about)?
+  - [ ] Specific pages only?
+- Should it be:
+  - [ ] Sticky (always visible at bottom)?
+  - [V] Fixed in viewport?
+  - [ ] Regular footer (scrolls with content)?
 
 ### 4. **Design**
-   - Any specific styling preferences?
-   no
-   - Should it follow existing theme system (light/dark mode)?
-   yes
-   - Minimal vs detailed layout?
-   minimal
+
+- Any specific styling preferences?
+  no
+- Should it follow existing theme system (light/dark mode)?
+  yes
+- Minimal vs detailed layout?
+  minimal
 
 ## Proposed Architecture (pending answers)
 
@@ -52,22 +57,24 @@ src/
       Footer.tsx               # Main footer component
       index.ts                 # Export
       footer.css              # Styles
-  
+
   RootLayout.tsx              # Include <Footer /> at bottom
 ```
 
 ### Data Flow
+
 ```
 Gallery                 Footer
   |                       |
   +---[charts from store]-+
-  
+
 localStorage → chartStore → Footer (displays stats)
 ```
 
 ### Implementation Plan
 
 **Footer Features:**
+
 - Display total saved charts count
 - Make footer interactive (clickable) to navigate to gallery
 - Show on all pages
@@ -98,12 +105,14 @@ localStorage → chartStore → Footer (displays stats)
    - Mock store instead of service layer
 
 ### Files Created
+
 - `src/components/Footer/Footer.tsx` - Main footer component
 - `src/components/Footer/footer.css` - Styling
 - `src/components/Footer/Footer.test.tsx` - Unit tests
 - `src/components/Footer/index.ts` - Export
 
 ### Files Modified
+
 - `src/layouts/RootLayout.tsx` - Added Footer component
 - `src/store/chartStore.ts` - Added reactive chart count tracking
 - `src/pages/GalleryPage.tsx` - Use store deletion method

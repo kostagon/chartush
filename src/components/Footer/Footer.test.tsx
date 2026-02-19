@@ -32,7 +32,7 @@ describe('Footer', () => {
     render(
       <BrowserRouter>
         <Footer />
-      </BrowserRouter>
+      </BrowserRouter>,
     )
 
     expect(screen.getByText(/Total Charts:/)).toBeInTheDocument()
@@ -45,7 +45,7 @@ describe('Footer', () => {
     render(
       <BrowserRouter>
         <Footer />
-      </BrowserRouter>
+      </BrowserRouter>,
     )
 
     expect(screen.getByText('0')).toBeInTheDocument()
@@ -58,7 +58,7 @@ describe('Footer', () => {
     render(
       <BrowserRouter>
         <Footer />
-      </BrowserRouter>
+      </BrowserRouter>,
     )
 
     const footer = screen.getByText(/Total Charts:/).closest('.footer')
