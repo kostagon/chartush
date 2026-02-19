@@ -4,7 +4,7 @@ A React charting application for creating and animating beautiful charts.
 
 ## 🚀 Live Site
 
-**[https://vyaron.github.io/chartush/](https://vyaron.github.io/chartush/)**
+**[https://kostagon.github.io/chartush/](https://kostagon.github.io/chartush/)**
 
 ## Features
 
@@ -20,4 +20,3 @@ A React charting application for creating and animating beautiful charts.
 - Vite
 - D3.js for charting
 - gif.js for GIF export
-

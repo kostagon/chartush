@@ -13,13 +13,18 @@ function easeOutCubic(t: number): number {
 
 // Calculate staggered progress for each item
 // overlap: 0 = sequential, 1 = all together
-function getStaggeredProgress(globalProgress: number, index: number, totalItems: number, overlap: number = 0.5): number {
+function getStaggeredProgress(
+  globalProgress: number,
+  index: number,
+  totalItems: number,
+  overlap: number = 0.5,
+): number {
   if (totalItems <= 1) return globalProgress
-  
+
   const staggerAmount = 1 - overlap
   const itemDuration = 1 / (1 + staggerAmount * (totalItems - 1))
   const itemDelay = index * itemDuration * staggerAmount
-  
+
   const itemProgress = (globalProgress - itemDelay) / itemDuration
   return Math.max(0, Math.min(1, itemProgress))
 }
@@ -42,7 +47,7 @@ export function drawBarsAnimated(
   chart: Chart,
   width: number,
   height: number,
-  progress: number
+  progress: number,
 ): void {
   const { terms, style, valueType } = chart
   if (terms.length === 0) return
@@ -63,7 +68,12 @@ export function drawBarsAnimated(
   ctx.textBaseline = 'top'
 
   terms.forEach((term, index) => {
-    const itemProgress = getStaggeredProgress(progress, index, terms.length, 0.4)
+    const itemProgress = getStaggeredProgress(
+      progress,
+      index,
+      terms.length,
+      0.4,
+    )
     const easedItemProgress = easeOutCubic(itemProgress)
 
     const x = PADDING + index * (barWidth + BAR_GAP)
@@ -80,7 +90,8 @@ export function drawBarsAnimated(
       const textOpacity = (itemProgress - 0.7) / 0.3
       ctx.fillStyle = `rgba(51, 51, 51, ${textOpacity})`
       ctx.font = '14px Arial'
-      const displayValue = valueType === 'percent' ? `${percents[index]}%` : term.value.toString()
+      const displayValue =
+        valueType === 'percent' ? `${percents[index]}%` : term.value.toString()
       ctx.fillText(displayValue, x + barWidth / 2, y - 20)
     }
 
@@ -99,7 +110,7 @@ export function drawCirclesAnimated(
   chart: Chart,
   width: number,
   height: number,
-  progress: number
+  progress: number,
 ): void {
   const { terms, valueType } = chart
   if (terms.length === 0) return
@@ -118,7 +129,12 @@ export function drawCirclesAnimated(
   const centerY = PADDING + chartHeight / 2
 
   terms.forEach((term, index) => {
-    const itemProgress = getStaggeredProgress(progress, index, terms.length, 0.4)
+    const itemProgress = getStaggeredProgress(
+      progress,
+      index,
+      terms.length,
+      0.4,
+    )
     const easedItemProgress = easeOutCubic(itemProgress)
 
     const scaleFactor = Math.sqrt(term.value / maxValue)
@@ -147,7 +163,8 @@ export function drawCirclesAnimated(
       ctx.textAlign = 'center'
       ctx.textBaseline = 'middle'
       ctx.font = 'bold 14px Arial'
-      const displayValue = valueType === 'percent' ? `${percents[index]}%` : term.value.toString()
+      const displayValue =
+        valueType === 'percent' ? `${percents[index]}%` : term.value.toString()
       ctx.fillText(displayValue, centerX, centerY)
     }
 
@@ -168,7 +185,7 @@ export function drawRectanglesAnimated(
   chart: Chart,
   width: number,
   height: number,
-  progress: number
+  progress: number,
 ): void {
   const { terms, valueType } = chart
   if (terms.length === 0) return
@@ -196,7 +213,12 @@ export function drawRectanglesAnimated(
   })
 
   terms.forEach((term, index) => {
-    const itemProgress = getStaggeredProgress(progress, index, terms.length, 0.5)
+    const itemProgress = getStaggeredProgress(
+      progress,
+      index,
+      terms.length,
+      0.5,
+    )
     const easedItemProgress = easeOutCubic(itemProgress)
 
     const proportion = term.value / total
@@ -230,7 +252,8 @@ export function drawRectanglesAnimated(
       ctx.fillText(term.label, centerX, centerY - 12)
 
       ctx.font = '12px Arial'
-      const displayValue = valueType === 'percent' ? `${percents[index]}%` : term.value.toString()
+      const displayValue =
+        valueType === 'percent' ? `${percents[index]}%` : term.value.toString()
       ctx.fillText(displayValue, centerX, centerY + 12)
     }
   })
@@ -241,7 +264,7 @@ export function drawDonutAnimated(
   chart: Chart,
   width: number,
   height: number,
-  progress: number
+  progress: number,
 ): void {
   const { terms, valueType } = chart
   if (terms.length === 0) return
@@ -266,7 +289,12 @@ export function drawDonutAnimated(
   })
 
   terms.forEach((term, index) => {
-    const itemProgress = getStaggeredProgress(progress, index, terms.length, 0.6)
+    const itemProgress = getStaggeredProgress(
+      progress,
+      index,
+      terms.length,
+      0.6,
+    )
     const easedItemProgress = easeOutCubic(itemProgress)
 
     const startAngle = startAngles[index]
@@ -318,7 +346,15 @@ export function drawDonutAnimated(
   }
 
   // Draw legend below
-  drawLegendAnimated(ctx, terms, percents, valueType, width, chartHeight, progress)
+  drawLegendAnimated(
+    ctx,
+    terms,
+    percents,
+    valueType,
+    width,
+    chartHeight,
+    progress,
+  )
 }
 
 function drawLegendAnimated(
@@ -328,7 +364,7 @@ function drawLegendAnimated(
   valueType: Chart['valueType'],
   width: number,
   startY: number,
-  progress: number
+  progress: number,
 ): void {
   if (progress < 0.5) return
 
@@ -352,7 +388,8 @@ function drawLegendAnimated(
 
     // Value
     ctx.font = '10px Arial'
-    const displayValue = valueType === 'percent' ? `${percents[index]}%` : term.value.toString()
+    const displayValue =
+      valueType === 'percent' ? `${percents[index]}%` : term.value.toString()
     ctx.fillText(displayValue, x - 14, legendY + 22)
   })
 }
@@ -370,7 +407,7 @@ export interface AnimationController {
 export function createAnimationController(
   canvas: HTMLCanvasElement,
   chart: Chart,
-  onComplete?: () => void
+  onComplete?: () => void,
 ): AnimationController {
   let animationId: number | null = null
   let playing = false
@@ -398,7 +435,13 @@ export function createAnimationController(
         drawCirclesAnimated(ctx, chart, canvas.width, canvas.height, progress)
         break
       case 'rectangles':
-        drawRectanglesAnimated(ctx, chart, canvas.width, canvas.height, progress)
+        drawRectanglesAnimated(
+          ctx,
+          chart,
+          canvas.width,
+          canvas.height,
+          progress,
+        )
         break
       case 'donut':
         drawDonutAnimated(ctx, chart, canvas.width, canvas.height, progress)
@@ -454,7 +497,7 @@ export function createAnimationController(
 export async function exportToGif(
   canvas: HTMLCanvasElement,
   chart: Chart,
-  onProgress?: (progress: number) => void
+  onProgress?: (progress: number) => void,
 ): Promise<Blob> {
   return new Promise((resolve, reject) => {
     const gif = new GIF({
@@ -462,7 +505,7 @@ export async function exportToGif(
       quality: 10,
       width: canvas.width,
       height: canvas.height,
-      workerScript: '/gif.worker.js'
+      workerScript: `${import.meta.env.BASE_URL}gif.worker.js`,
     })
 
     const offscreenCanvas = document.createElement('canvas')
@@ -492,23 +535,53 @@ export async function exportToGif(
       // Draw chart based on type with progress
       switch (chart.type) {
         case 'bars':
-          drawBarsAnimated(ctx, chart, offscreenCanvas.width, offscreenCanvas.height, progress)
+          drawBarsAnimated(
+            ctx,
+            chart,
+            offscreenCanvas.width,
+            offscreenCanvas.height,
+            progress,
+          )
           break
         case 'circles':
-          drawCirclesAnimated(ctx, chart, offscreenCanvas.width, offscreenCanvas.height, progress)
+          drawCirclesAnimated(
+            ctx,
+            chart,
+            offscreenCanvas.width,
+            offscreenCanvas.height,
+            progress,
+          )
           break
         case 'rectangles':
-          drawRectanglesAnimated(ctx, chart, offscreenCanvas.width, offscreenCanvas.height, progress)
+          drawRectanglesAnimated(
+            ctx,
+            chart,
+            offscreenCanvas.width,
+            offscreenCanvas.height,
+            progress,
+          )
           break
         case 'donut':
-          drawDonutAnimated(ctx, chart, offscreenCanvas.width, offscreenCanvas.height, progress)
+          drawDonutAnimated(
+            ctx,
+            chart,
+            offscreenCanvas.width,
+            offscreenCanvas.height,
+            progress,
+          )
           break
         default:
-          drawBarsAnimated(ctx, chart, offscreenCanvas.width, offscreenCanvas.height, progress)
+          drawBarsAnimated(
+            ctx,
+            chart,
+            offscreenCanvas.width,
+            offscreenCanvas.height,
+            progress,
+          )
       }
 
       // Add frame (delay in centiseconds)
-      const delay = (ANIMATION_DURATION / FRAME_COUNT) / 10
+      const delay = ANIMATION_DURATION / FRAME_COUNT / 10
       gif.addFrame(ctx, { copy: true, delay })
     }
 
