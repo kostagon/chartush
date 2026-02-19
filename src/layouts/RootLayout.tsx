@@ -1,5 +1,6 @@
 import { NavLink, Outlet } from 'react-router-dom'
 import { useAppStore } from '../store'
+import { Footer } from '../components/Footer'
 
 export function RootLayout() {
     const { theme, toggleTheme } = useAppStore()
@@ -23,6 +24,7 @@ export function RootLayout() {
             <main>
                 <Outlet />
             </main>
+            <Footer />
         </>
     )
 }

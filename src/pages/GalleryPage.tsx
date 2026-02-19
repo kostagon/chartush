@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { loadCharts, deleteChart } from '../services/gallery.service'
+import { loadCharts } from '../services/gallery.service'
+import { useChartStore } from '../store'
 import { ChartCard } from '../components/Gallery/ChartCard'
 import type { Chart } from '../types'
 
@@ -8,6 +9,7 @@ export function GalleryPage() {
   const [charts, setCharts] = useState<Chart[]>(() => loadCharts())
   const [deleteId, setDeleteId] = useState<string | null>(null)
   const navigate = useNavigate()
+  const deleteChartFromGallery = useChartStore((state) => state.deleteChartFromGallery)
 
   function onEdit(id: string) {
     navigate(`/editor/${id}`)
@@ -19,7 +21,7 @@ export function GalleryPage() {
 
   function onConfirmDelete() {
     if (deleteId) {
-      deleteChart(deleteId)
+      deleteChartFromGallery(deleteId)
       setCharts(loadCharts())
       setDeleteId(null)
     }
